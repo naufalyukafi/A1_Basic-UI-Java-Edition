@@ -9,13 +9,13 @@ public class ResourceTest extends ViewTest {
         resource =rsc;
     }
 
-    public void testStringResource(String name, String expected) {
+    public void testStringResource(String name,String expected) {
         int resId = resource.getIdentifier(name, "string", getClass().getPackage().getName());
         testItem(0,resId,"String "+name+" id is not exist",2);
         testItem(expected,resource.getString(resId),"String "+name+" value is not valid",1);
     }
 
-    public void testStringArrayResource(String name, String[] expected) {
+    public void testStringArrayResource(String name,String[] expected) {
         int resId = resource.getIdentifier(name, "array", getClass().getPackage().getName());
         testItem(0,resId,"String array "+name+" id is not exist",2);
         String[] str = resource.getStringArray(resId);
@@ -33,13 +33,13 @@ public class ResourceTest extends ViewTest {
         */
     }
 
-    public void testColorResource(String name, int expected) {
+    public void testColorResource(String name,int expected) {
         int resId = resource.getIdentifier(name, "color", getClass().getPackage().getName());
         testItem(0,resId,"Color "+name+" id is not exist",2);
         testItem(expected,resource.getColor(resId),"Color "+name+" value is not valid",1);
     }
 
-    public void testFontResource(String name, String expected) {
+    public void testFontResource(String name,String expected) {
         //int resId = R.font.cambria;
         //Typeface font = Typeface.createFromAsset(resource.getAssets(),name);
         int resId = resource.getIdentifier(name, "font", getClass().getPackage().getName());

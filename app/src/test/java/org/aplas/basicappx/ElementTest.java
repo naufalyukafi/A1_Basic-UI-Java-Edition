@@ -1,14 +1,10 @@
 package org.aplas.basicappx;
 
-import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.RippleDrawable;
 import android.view.View;
 import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -17,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class ElementTest extends ViewTest {
@@ -92,18 +87,9 @@ public class ElementTest extends ViewTest {
         testItem(expected,component.getPaddingLeft(),msg,1);
         testItem(expected,component.getPaddingRight(),msg,1);
     }
-
-//    WIP !
     public void testBgColor(int expected) {
         String msg = msgHeader + "Element Background color is not suitable\n";
-        int buttonColor =0;
-        String aw="";
-        if (component.getBackground() instanceof ColorDrawable) {
-            testItem(expected,((ColorDrawable) component.getBackground()).getColor(),msg,1);
-        }else {
-            buttonColor =getButtonBgColor((Button)component);
-            testItem(expected,buttonColor,msg,1);
-        }
+        testItem(expected,((ColorDrawable) component.getBackground()).getColor(),msg,1);
     }
 
     public void testBgGradientColor(int[] expected) {
@@ -203,31 +189,6 @@ public class ElementTest extends ViewTest {
         testItem(listToString(expected),res,msg,1);
     }
 
-    public int getButtonBgColor(Button button){
-        int buttonColor = 0;
-
-        if (button.getBackground() instanceof ColorDrawable) {
-            ColorDrawable cd = (ColorDrawable) button.getBackground();
-            buttonColor = cd.getColor();
-        }
-
-        if (button.getBackground() instanceof RippleDrawable) {
-            RippleDrawable rippleDrawable = (RippleDrawable) button.getBackground();
-            Drawable.ConstantState state = rippleDrawable.getConstantState();
-            try {
-                Field colorField = state.getClass().getDeclaredField("mColor");
-                colorField.setAccessible(true);
-                ColorStateList colorStateList = (ColorStateList) colorField.get(state);
-                buttonColor = colorStateList.getDefaultColor();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        return buttonColor;
-    }
-
     public void testSpinnerContent(String[] expected) {
         /*
         String msg = msgHeader + "Element spinner content is not suitable\n";
@@ -257,7 +218,7 @@ public class ElementTest extends ViewTest {
 
     public void testSelected(boolean expected) {
         String msg = msgHeader + "Element checked/selected value is not suitable\n";
-        if (component.getClass().equals(com.google.android.material.checkbox.MaterialCheckBox.class)) {
+        if (component.getClass().equals(androidx.appcompat.widget.AppCompatCheckBox.class)) {
             testItem(expected,((CheckBox)component).isChecked(),msg,1);
         } else {
             testItem(expected,((RadioButton)component).isChecked(),msg,1);
